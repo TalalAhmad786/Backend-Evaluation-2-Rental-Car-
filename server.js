@@ -1,15 +1,18 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
-const movies = require('./routes/movies') ;
+const cars = require('./routes/cars') ;
 const users = require('./routes/users');
+const reservations = require('./routes/reservation');
+//const reservations = require('./routes/reservations');
 const bodyParser = require('body-parser');
-const mongoose = require('./config/database'); //database configuration
+const mongoose = require('mongoose'); //database configuration
+require('dotenv').config();
 var jwt = require('jsonwebtoken');
 const app = express();
 app.set('secretKey', 'nodeRestApi'); // jwt secret token
 // connection to mongodb
-mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
@@ -18,8 +21,10 @@ res.json({"tutorial" : "Build REST API with node.js"});
 });
 // public route
 app.use('/users', users);
+app.use('/reservations', reservations);
+
 // private route
-app.use('/movies', validateUser, movies);
+app.use('/cars', validateUser,cars);
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
@@ -51,6 +56,14 @@ app.use(function(err, req, res, next) {
   else 
     res.status(500).json({message: "Something looks wrong :( !!!"});
 });
-app.listen(3000, function(){
- console.log('Node server listening on port 3000');
-});
+
+mongoose
+    .connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+
+    })
+    .then(() => console.log('MongoDB database Connected...'))
+    .catch((err) => console.log(err))
+
+    app.listen(process.env.PORT, () => console.log(`App listening at http://localhost:${process.env.PORT}`))
