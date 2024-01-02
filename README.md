@@ -1,5 +1,5 @@
 # Backend-Evaluation-2-Rental-Car-
-**Car Rental Management System - Frontend**
+**Car Rental Management System - Backend**
 This repository contains the backend implementation of a car rental management system built using Node.js with Express.js and MongoDB as the database.
 
 **Features**
@@ -57,7 +57,7 @@ Cancel a reservation.
 - Database: MongoDB
 # Getting Started
 
-1. Clone the repository: git clone https://github.com/TalalAhmad786/Rental-Car-Application-FrontEnd-.git
+1. Clone the repository: git clone https://github.com/TalalAhmad786/Rental-Car-Application-Backend-.git
 2. Install dependencies: npm install
 3. Configure MongoDB connection in .env file.
 4. Run the application: npm start
